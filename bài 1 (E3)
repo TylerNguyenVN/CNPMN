@@ -1,0 +1,37 @@
+ORG 0000H
+    LJMP MAIN
+
+ORG 000BH          ; Vector ngắt Timer 0 (hoặc dùng cờ TF0 polling)
+    LJMP TIMER0_ISR
+
+MAIN:
+    MOV TMOD, #01H      ; Timer 0, Mode 1 (16-bit)
+    SETB P1.0           ; Khởi tạo LED tắt (active-high giả sử hoặc active-low tùy mạch, ở đây giả sử 0: sáng, 1: tắt)
+    
+LED_LOOP:
+    MOV R2, #10         ; Biến đếm 10 lần 50ms = 500ms (Sáng)
+    CLR P1.0            ; LED sáng (mức thấp)
+SANG_MS:
+    ACALL DELAY_50MS
+    DJNZ R2, SANG_MS
+
+    MOV R2, #10         ; Biến đếm 10 lần 50ms = 500ms (Tắt)
+    SETB P1.0           ; LED tắt (mức cao)
+TAT_MS:
+    ACALL DELAY_50MS
+    DJNZ R2, TAT_MS
+
+    SJMP LED_LOOP
+
+; Chương trình con tạo trễ 50ms bằng Timer 0 Mode 1
+DELAY_50MS:
+    MOV TH0, #3CH       ; Nạp giá trị cao
+    MOV TL0, #BDH       ; Nạp giá trị thấp
+    SETB TR0            ; Khởi động Timer 0
+WAIT_TF0:
+    JNB TF0, WAIT_TF0   ; Chờ cờ tràn TF0 lên 1
+    CLR TR0             ; Dừng Timer 0
+    CLR TF0             ; Xóa cờ tràn
+    RET
+
+END
