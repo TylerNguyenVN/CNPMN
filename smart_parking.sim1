@@ -3,7 +3,7 @@
 <!-- ============================================================== -->
 <!-- 1. VI ĐIỀU KHIỂN AT89C51                                      -->
 <!-- ============================================================== -->
-<item itemtype="MCU" CircId="8051-1" mainComp="false" Show_id="true" Show_Val="false" Pos="0,0" rotation="0" hflip="1" vflip="1" label="AT89C51" idLabPos="12,-16" labelrot="0" valLabPos="0,0" valLabRot="0" Frequency="12 MHz" Program="smart_parking_asm.hex" Auto_Load="true" SerialMon="-1" />
+<item itemtype="MCU" CircId="8051-1" mainComp="false" Show_id="true" Show_Val="false" Pos="0,0" rotation="0" hflip="1" vflip="1" label="AT89C51" idLabPos="12,-16" labelrot="0" valLabPos="0,0" valLabRot="0" Frequency="11.0592 MHz" Program="smart_parking_asm.hex" Auto_Load="true" SerialMon="-1" />
 
 <!-- Nguồn 5V cho chân !EA -->
 <item itemtype="Rail" CircId="Rail-EA" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="84,56" rotation="90" hflip="1" vflip="1" label="VCC" idLabPos="-5,-10" labelrot="-90" valLabPos="-12,6" valLabRot="-90" Voltage="5 V" />
@@ -77,11 +77,11 @@
 <item itemtype="Connector" uid="conn-P13-buf" startpinid="Buffer-Gate-in0" endpinid="8051-1-PORT13" pointList="-104,40,-24,40,-24,32,-8,32" />
 <item itemtype="Connector" uid="conn-buf-Gate" startpinid="Buffer-Gate-out" endpinid="Led-Gate-lPin" pointList="-136,40,-184,40" />
 
-<!-- UART P3.1 (TXD) -> SerialTerm RX (pin0) -->
-<item itemtype="Connector" uid="conn-TXD" startpinid="8051-1-PORT31" endpinid="SerialTerm-1-pin0" pointList="-8,88,-16,88,-16,-228,-36,-228" />
+<!-- UART P3.1 (TXD) -> SerialTerm RX (pin1) -->
+<item itemtype="Connector" uid="conn-TXD" startpinid="8051-1-PORT31" endpinid="SerialTerm-1-pin1" pointList="-8,88,-16,88,-16,-212,-36,-212" />
 
-<!-- UART P3.0 (RXD) -> SerialTerm TX (pin1) -->
-<item itemtype="Connector" uid="conn-RXD" startpinid="8051-1-PORT30" endpinid="SerialTerm-1-pin1" pointList="-8,80,-20,80,-20,-212,-36,-212" />
+<!-- UART P3.0 (RXD) -> SerialTerm TX (pin0) -->
+<item itemtype="Connector" uid="conn-RXD" startpinid="8051-1-PORT30" endpinid="SerialTerm-1-pin0" pointList="-8,80,-24,80,-24,-228,-36,-228" />
 
 <!-- Cảm biến Vào P3.2 -->
 <item itemtype="Connector" uid="conn-PushIN-P32" startpinid="Push-IN-switch0pinN" endpinid="8051-1-PORT32" pointList="-144,100,-32,100,-32,96,-8,96" />
