@@ -3,6 +3,11 @@ BAO_CAO_DU_AN_THUC_TE.md
 BAO_CAO_NOP_BAI_TAP_LON.md
 .impeccable/
 
+# API Keys & Local Secrets
+config.js
+.env
+.env.local
+
 # Ảnh mẫu thử nghiệm
 *.png
 *.jpg
