@@ -19,7 +19,6 @@
  */
 
 #include <reg51.h>
-#include <stdio.h>
 
 // --- ĐỊNH NGHĨA CÁC CHÂN CẢM BIẾN ---
 sbit IR_IN_FRONT  = P3^2;  // Cảm biến trước cổng vào (P3.2 / INT0)
@@ -48,9 +47,11 @@ void delay_ms(unsigned int ms);
 void uart_init(void);
 void uart_send_char(char c);
 void uart_send_string(char *s);
+void uart_send_num(unsigned int n);
 void lcd_cmd(unsigned char cmd);
 void lcd_char(char c);
 void lcd_string(char *s);
+void lcd_send_2digits(unsigned char n);
 void lcd_init(void);
 void update_lcd_status(void);
 void execute_gate_in(void);
@@ -88,6 +89,22 @@ void uart_send_string(char *s) {
     }
 }
 
+void uart_send_num(unsigned int n) {
+    char b[6];
+    char idx = 0;
+    if (n == 0) {
+        uart_send_char('0');
+        return;
+    }
+    while (n > 0) {
+        b[idx++] = (n % 10) + '0';
+        n /= 10;
+    }
+    while (idx > 0) {
+        uart_send_char(b[--idx]);
+    }
+}
+
 /* =====================================================================
  * GIAO TIẾP LCD 16X2 (PORT 2 DATA)
  * ===================================================================== */
@@ -115,6 +132,11 @@ void lcd_string(char *s) {
     }
 }
 
+void lcd_send_2digits(unsigned char n) {
+    lcd_char((n / 10) + '0');
+    lcd_char((n % 10) + '0');
+}
+
 void lcd_init(void) {
     delay_ms(20);
     lcd_cmd(0x38); // 8-bit, 2 dòng, font 5x7
@@ -125,8 +147,6 @@ void lcd_init(void) {
 }
 
 void update_lcd_status(void) {
-    char str_buf[16];
-    char uart_buf[48];
     unsigned char empty_slots = MAX_CAPACITY - current_cars;
 
     lcd_cmd(0x80); // Dòng 1
@@ -137,21 +157,26 @@ void update_lcd_status(void) {
         lcd_string("STATUS: FULL !!!");
         LED_RED = 1;
     } else {
-        sprintf(str_buf, "SLOTS: %02d/%02d FREE", (int)empty_slots, (int)MAX_CAPACITY);
-        lcd_string(str_buf);
+        lcd_string("SLOTS: ");
+        lcd_send_2digits(empty_slots);
+        lcd_string("/");
+        lcd_send_2digits(MAX_CAPACITY);
+        lcd_string(" FREE");
         LED_RED = 0;
     }
 
     // Báo cáo trạng thái ngược lại cho Máy tính / Web qua UART
-    sprintf(uart_buf, "[STATUS] CARS:%u SLOTS:%u\r\n", (unsigned int)current_cars, (unsigned int)empty_slots);
-    uart_send_string(uart_buf);
+    uart_send_string("[STATUS] CARS:");
+    uart_send_num((unsigned int)current_cars);
+    uart_send_string(" SLOTS:");
+    uart_send_num((unsigned int)empty_slots);
+    uart_send_string("\r\n");
 }
 
 /* =====================================================================
  * CHU TRÌNH MỞ BARIE CỔNG VÀO (CHỐNG KẸP XE)
  * ===================================================================== */
 void execute_gate_in(void) {
-    char log[64];
     if (current_cars >= MAX_CAPACITY) {
         uart_send_string("[ALERT] BAI DAY! TU CHOI XE VAO.\r\n");
         BUZZER = 1;
@@ -165,8 +190,9 @@ void execute_gate_in(void) {
     current_cars++;
     update_lcd_status();
 
-    sprintf(log, "[GATE-IN] OK! VE:#TK%u | DANG MO BARIE...\r\n", ticket_id);
-    uart_send_string(log);
+    uart_send_string("[GATE-IN] OK! VE:#TK");
+    uart_send_num(ticket_id);
+    uart_send_string(" | DANG MO BARIE...\r\n");
 
     // Xuất xung mở Barie Vào & Bật đèn xanh
     BARRIER_IN = 1;

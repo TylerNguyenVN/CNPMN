@@ -8,10 +8,12 @@ BAO_CAO_NOP_BAI_TAP_LON.md
 *.jpg
 *.jpeg
 
-# Keil & IDE build artifacts (nếu có)
-*.hex
+# Keil & IDE build artifacts
 *.obj
 *.lst
 *.m51
+*.abs
 *.uvopt
 *.uvgui*
+MAIN
+SMART_PARKING_PRO
