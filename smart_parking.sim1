@@ -1,100 +1,113 @@
 <circuit version="" rev="2224" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="1" >
 
-<!-- VI ĐIỀU KHIỂN AT89C51 (8051) -->
-<item itemtype="MCU" CircId="8051-1" mainComp="false" Show_id="true" Show_Val="false" Pos="-200,-100" rotation="0" hflip="1" vflip="1" label="AT89C51" idLabPos="10,-14" labelrot="0" valLabPos="0,0" valLabRot="0" Frequency="12 MHz" Program="smart_parking_asm.hex" Auto_Load="true" SerialMon="-1" />
+<!-- ============================================================== -->
+<!-- 1. VI ĐIỀU KHIỂN AT89C51                                      -->
+<!-- ============================================================== -->
+<item itemtype="MCU" CircId="8051-1" mainComp="false" Show_id="true" Show_Val="false" Pos="0,0" rotation="0" hflip="1" vflip="1" label="AT89C51" idLabPos="12,-16" labelrot="0" valLabPos="0,0" valLabRot="0" Frequency="12 MHz" Program="smart_parking_asm.hex" Auto_Load="true" SerialMon="-1" />
 
-<!-- NGUỒN VCC (+5V) CHO CHÂN !EA -->
-<item itemtype="Rail" CircId="Rail-EA" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-116,-52" rotation="90" hflip="1" vflip="1" label="VCC" idLabPos="-5,-10" labelrot="-90" valLabPos="-12,6" valLabRot="-90" Voltage="5 V" />
+<!-- Nguồn 5V cho chân !EA -->
+<item itemtype="Rail" CircId="Rail-EA" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="84,56" rotation="90" hflip="1" vflip="1" label="VCC" idLabPos="-5,-10" labelrot="-90" valLabPos="-12,6" valLabRot="-90" Voltage="5 V" />
 
-<!-- TÍN HIỆU RESET (RST = 0V MẶC ĐỊNH, NHẤN = 5V RESET) -->
-<item itemtype="Fixed Voltage" CircId="Fixed-RST" mainComp="false" Show_id="true" Show_Val="false" Pos="-260,-28" rotation="0" hflip="1" vflip="1" label="RST" idLabPos="-40,-7" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="5 V" Out="false" />
+<!-- Nút Reset vi điều khiển -->
+<item itemtype="Fixed Voltage" CircId="Fixed-RST" mainComp="false" Show_id="true" Show_Val="false" Pos="-120,-140" rotation="0" hflip="1" vflip="1" label="RESET (5V)" idLabPos="-76,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="5 V" Out="false" />
 
-<!-- MÀN HÌNH LCD 16X2 (HD44780) -->
-<item itemtype="Hd44780" CircId="Hd44780-1" mainComp="false" Show_id="true" Show_Val="false" Pos="40,20" rotation="0" hflip="1" vflip="1" label="LCD 16x2" idLabPos="60,-80" labelrot="0" valLabPos="0,0" valLabRot="0" Rows="2" Cols="16" />
-<item itemtype="Ground" CircId="Ground-LCD" mainComp="false" Show_id="false" Show_Val="false" Pos="64,60" rotation="0" hflip="1" vflip="1" label="GND" idLabPos="-16,8" labelrot="0" valLabPos="0,0" valLabRot="0" />
+<!-- ============================================================== -->
+<!-- 2. BẢNG HIỂN THỊ LCD 16X2 (PORT 2 DATA)                       -->
+<!-- ============================================================== -->
+<item itemtype="Hd44780" CircId="Hd44780-1" mainComp="false" Show_id="true" Show_Val="false" Pos="200,40" rotation="0" hflip="1" vflip="1" label="LCD 16x2 (PORT 2)" idLabPos="40,-86" labelrot="0" valLabPos="0,0" valLabRot="0" Rows="2" Cols="16" />
+<item itemtype="Ground" CircId="Ground-LCD" mainComp="false" Show_id="false" Show_Val="false" Pos="224,76" rotation="0" hflip="1" vflip="1" label="GND" idLabPos="-16,8" labelrot="0" valLabPos="0,0" valLabRot="0" />
 
-<!-- CẢM BIẾN VÀO (P3.2 / INT0) - NÚT BẤM KÉO XUỐNG MASS -->
-<item itemtype="Push" CircId="Push-IN" mainComp="false" Show_id="true" Show_Val="false" Pos="-320,-4" rotation="0" hflip="1" vflip="1" label="IR1: XE VAO (P3.2)" idLabPos="-40,-20" labelrot="0" valLabPos="0,0" valLabRot="0" Norm_Close="false" Poles="1" />
-<item itemtype="Ground" CircId="Ground-IN" mainComp="false" Show_id="false" Show_Val="false" Pos="-336,24" rotation="0" hflip="1" vflip="1" label="GND" idLabPos="-16,8" labelrot="0" valLabPos="0,0" valLabRot="0" />
+<!-- ============================================================== -->
+<!-- 3. CÁC THIẾT BỊ ĐẦU RA (PORT 1) - CÁCH NHAU 40PX, CHỮ THẲNG    -->
+<!-- ============================================================== -->
+<!-- LED Xanh: Bãi còn chỗ / Mở cổng vào (P1.0) -->
+<item itemtype="Buffer" CircId="Buffer-Green" mainComp="false" Show_id="false" Show_Val="false" Pos="-120,-80" rotation="-180" hflip="1" vflip="1" label="Buf1" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Invert_Inputs="false" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" initHigh="false" Inverted="false" Open_Collector="false" Tristate="false" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+<item itemtype="Led" CircId="Led-Green" mainComp="false" Show_id="true" Show_Val="false" Pos="-200,-80" rotation="-180" hflip="1" vflip="1" label="LED XANH (CON CHO)" idLabPos="160,5" labelrot="180" valLabPos="0,0" valLabRot="0" Color="Green" Grounded="true" Threshold="2.4 V" MaxCurrent="0.03 A" Resistance="100 Ω" />
 
-<!-- CẢM BIẾN RA (P3.3 / INT1) - NÚT BẤM KÉO XUỐNG MASS -->
-<item itemtype="Push" CircId="Push-OUT" mainComp="false" Show_id="true" Show_Val="false" Pos="-320,44" rotation="0" hflip="1" vflip="1" label="IR3: XE RA (P3.3)" idLabPos="-40,-20" labelrot="0" valLabPos="0,0" valLabRot="0" Norm_Close="false" Poles="1" />
-<item itemtype="Ground" CircId="Ground-OUT" mainComp="false" Show_id="false" Show_Val="false" Pos="-336,72" rotation="0" hflip="1" vflip="1" label="GND" idLabPos="-16,8" labelrot="0" valLabPos="0,0" valLabRot="0" />
+<!-- LED Đỏ: Báo bãi đầy - FULL (P1.1) -->
+<item itemtype="Buffer" CircId="Buffer-Red" mainComp="false" Show_id="false" Show_Val="false" Pos="-120,-40" rotation="-180" hflip="1" vflip="1" label="Buf2" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Invert_Inputs="false" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" initHigh="false" Inverted="false" Open_Collector="false" Tristate="false" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+<item itemtype="Led" CircId="Led-Red" mainComp="false" Show_id="true" Show_Val="false" Pos="-200,-40" rotation="-180" hflip="1" vflip="1" label="LED DO (FULL)" idLabPos="145,5" labelrot="180" valLabPos="0,0" valLabRot="0" Color="Red" Grounded="true" Threshold="2.4 V" MaxCurrent="0.03 A" Resistance="100 Ω" />
 
-<!-- ĐÈN BÁO XANH (P1.0 - CÒN CHỖ) -->
-<item itemtype="Buffer" CircId="Buffer-Green" mainComp="false" Show_id="false" Show_Val="false" Pos="-260,-92" rotation="-180" hflip="1" vflip="1" label="Buf1" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Invert_Inputs="false" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" initHigh="false" Inverted="false" Open_Collector="false" Tristate="false" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
-<item itemtype="Led" CircId="Led-Green" mainComp="false" Show_id="true" Show_Val="false" Pos="-316,-92" rotation="-180" hflip="1" vflip="1" label="LED XANH (CON CHO)" idLabPos="-40,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Color="Green" Grounded="true" Threshold="2.4 V" MaxCurrent="0.03 A" Resistance="100 Ω" />
+<!-- Còi Buzzer: Cảnh báo bãi đầy (P1.2) -->
+<item itemtype="Buffer" CircId="Buffer-Buzzer" mainComp="false" Show_id="false" Show_Val="false" Pos="-120,0" rotation="-180" hflip="1" vflip="1" label="Buf3" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Invert_Inputs="false" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" initHigh="false" Inverted="false" Open_Collector="false" Tristate="false" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+<item itemtype="Led" CircId="Led-Buzzer" mainComp="false" Show_id="true" Show_Val="false" Pos="-200,0" rotation="-180" hflip="1" vflip="1" label="COI BUZZER (P1.2)" idLabPos="160,5" labelrot="180" valLabPos="0,0" valLabRot="0" Color="Yellow" Grounded="true" Threshold="2.4 V" MaxCurrent="0.03 A" Resistance="100 Ω" />
 
-<!-- ĐÈN BÁO ĐỎ (P1.1 - BÃI ĐẦY) -->
-<item itemtype="Buffer" CircId="Buffer-Red" mainComp="false" Show_id="false" Show_Val="false" Pos="-260,-84" rotation="-180" hflip="1" vflip="1" label="Buf2" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Invert_Inputs="false" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" initHigh="false" Inverted="false" Open_Collector="false" Tristate="false" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
-<item itemtype="Led" CircId="Led-Red" mainComp="false" Show_id="true" Show_Val="false" Pos="-316,-84" rotation="-180" hflip="1" vflip="1" label="LED DO (FULL)" idLabPos="-40,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Color="Red" Grounded="true" Threshold="2.4 V" MaxCurrent="0.03 A" Resistance="100 Ω" />
+<!-- Mô tơ Barie: Nâng cần cho xe qua (P1.3) -->
+<item itemtype="Buffer" CircId="Buffer-Gate" mainComp="false" Show_id="false" Show_Val="false" Pos="-120,40" rotation="-180" hflip="1" vflip="1" label="Buf4" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Invert_Inputs="false" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" initHigh="false" Inverted="false" Open_Collector="false" Tristate="false" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+<item itemtype="Led" CircId="Led-Gate" mainComp="false" Show_id="true" Show_Val="false" Pos="-200,40" rotation="-180" hflip="1" vflip="1" label="BARIE VAO (P1.3)" idLabPos="155,5" labelrot="180" valLabPos="0,0" valLabRot="0" Color="Orange" Grounded="true" Threshold="2.4 V" MaxCurrent="0.03 A" Resistance="100 Ω" />
 
-<!-- CÒI BUZZER (P1.2 - CẢNH BÁO BÃI ĐẦY) -->
-<item itemtype="Buffer" CircId="Buffer-Buzzer" mainComp="false" Show_id="false" Show_Val="false" Pos="-260,-76" rotation="-180" hflip="1" vflip="1" label="Buf3" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Invert_Inputs="false" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" initHigh="false" Inverted="false" Open_Collector="false" Tristate="false" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
-<item itemtype="Led" CircId="Led-Buzzer" mainComp="false" Show_id="true" Show_Val="false" Pos="-316,-76" rotation="-180" hflip="1" vflip="1" label="COI BUZZER (P1.2)" idLabPos="-40,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Color="Yellow" Grounded="true" Threshold="2.4 V" MaxCurrent="0.03 A" Resistance="100 Ω" />
+<!-- ============================================================== -->
+<!-- 4. CẢM BIẾN / NÚT NHẤN ĐẦU VÀO (PORT 3)                       -->
+<!-- ============================================================== -->
+<!-- Nút Xe Vào: IR1 (P3.2) -->
+<item itemtype="Push" CircId="Push-IN" mainComp="false" Show_id="true" Show_Val="false" Pos="-160,100" rotation="0" hflip="1" vflip="1" label="NUT VAO: P3.2 (IR1)" idLabPos="-55,-22" labelrot="0" valLabPos="0,0" valLabRot="0" Norm_Close="false" Poles="1" />
+<item itemtype="Ground" CircId="Ground-IN" mainComp="false" Show_id="false" Show_Val="false" Pos="-176,130" rotation="0" hflip="1" vflip="1" label="GND" idLabPos="-16,8" labelrot="0" valLabPos="0,0" valLabRot="0" />
 
-<!-- ĐIỀU KHIỂN CẦN BARIE (P1.3 - MỞ BARIE CHO XE QUA) -->
-<item itemtype="Buffer" CircId="Buffer-Gate" mainComp="false" Show_id="false" Show_Val="false" Pos="-260,-68" rotation="-180" hflip="1" vflip="1" label="Buf4" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Invert_Inputs="false" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" initHigh="false" Inverted="false" Open_Collector="false" Tristate="false" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
-<item itemtype="Led" CircId="Led-Gate" mainComp="false" Show_id="true" Show_Val="false" Pos="-316,-68" rotation="-180" hflip="1" vflip="1" label="BARIE VAO (P1.3)" idLabPos="-40,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Color="Orange" Grounded="true" Threshold="2.4 V" MaxCurrent="0.03 A" Resistance="100 Ω" />
+<!-- Nút Xe Ra: IR3 (P3.3) -->
+<item itemtype="Push" CircId="Push-OUT" mainComp="false" Show_id="true" Show_Val="false" Pos="-160,160" rotation="0" hflip="1" vflip="1" label="NUT RA: P3.3 (IR3)" idLabPos="-55,-22" labelrot="0" valLabPos="0,0" valLabRot="0" Norm_Close="false" Poles="1" />
+<item itemtype="Ground" CircId="Ground-OUT" mainComp="false" Show_id="false" Show_Val="false" Pos="-176,190" rotation="0" hflip="1" vflip="1" label="GND" idLabPos="-16,8" labelrot="0" valLabPos="0,0" valLabRot="0" />
 
-<!-- MÀN HÌNH TERMINAL UART BẢO VỆ (9600 BAUD) -->
-<item itemtype="SerialTerm" CircId="SerialTerm-1" mainComp="false" Show_id="true" Show_Val="false" Pos="-100,-220" rotation="0" hflip="-1" vflip="1" label="TERMINAL BAO VE (UART 9600)" idLabPos="-40,-32" labelrot="0" valLabPos="-16,20" valLabRot="0" Baudrate="9600 _Bauds" DataBits="8 _Bits" StopBits="1 _Bits" SerialMon="true" />
+<!-- ============================================================== -->
+<!-- 5. TERMINAL TRUYỀN THÔNG UART BẢO VỆ (9600 BAUD)             -->
+<!-- ============================================================== -->
+<item itemtype="SerialTerm" CircId="SerialTerm-1" mainComp="false" Show_id="true" Show_Val="false" Pos="-60,-220" rotation="0" hflip="-1" vflip="1" label="MAY TINH BAO VE (UART 9600)" idLabPos="-70,-32" labelrot="0" valLabPos="-16,20" valLabRot="0" Baudrate="9600 _Bauds" DataBits="8 _Bits" StopBits="1 _Bits" SerialMon="true" />
 
-<!-- CONNECTIONS (ĐƯỜNG NỐI DÂY) -->
-
+<!-- ============================================================== -->
+<!-- 6. KHỐI KẾT NỐI DÂY (ORTHOGONAL WIRING)                        -->
+<!-- ============================================================== -->
 <!-- Nguồn EA vào 5V -->
-<item itemtype="Connector" uid="conn-EA" startpinid="8051-1-PORTEEA" endpinid="Rail-EA-outnod" pointList="-144,-20,-116,-20,-116,-36" />
+<item itemtype="Connector" uid="conn-EA" startpinid="8051-1-PORTEEA" endpinid="Rail-EA-outnod" pointList="56,80,84,80,84,72" />
 
-<!-- Chân Reset -->
-<item itemtype="Connector" uid="conn-RST" startpinid="Fixed-RST-outnod" endpinid="8051-1-RST" pointList="-244,-28,-208,-28" />
+<!-- Reset MCU -->
+<item itemtype="Connector" uid="conn-RST" startpinid="Fixed-RST-outnod" endpinid="8051-1-RST" pointList="-104,-140,-56,-140,-56,72,-8,72" />
 
-<!-- P1.0 -> Buffer -> LED Xanh -->
-<item itemtype="Connector" uid="conn-P10-buf" startpinid="Buffer-Green-in0" endpinid="8051-1-PORT10" pointList="-244,-92,-208,-92" />
-<item itemtype="Connector" uid="conn-buf-LEDG" startpinid="Buffer-Green-out" endpinid="Led-Green-lPin" pointList="-276,-92,-300,-92" />
+<!-- P1.0 -> Buffer-Green -> Led-Green -->
+<item itemtype="Connector" uid="conn-P10-buf" startpinid="Buffer-Green-in0" endpinid="8051-1-PORT10" pointList="-104,-80,-48,-80,-48,8,-8,8" />
+<item itemtype="Connector" uid="conn-buf-LEDG" startpinid="Buffer-Green-out" endpinid="Led-Green-lPin" pointList="-136,-80,-184,-80" />
 
-<!-- P1.1 -> Buffer -> LED Đỏ -->
-<item itemtype="Connector" uid="conn-P11-buf" startpinid="Buffer-Red-in0" endpinid="8051-1-PORT11" pointList="-244,-84,-208,-84" />
-<item itemtype="Connector" uid="conn-buf-LEDR" startpinid="Buffer-Red-out" endpinid="Led-Red-lPin" pointList="-276,-84,-300,-84" />
+<!-- P1.1 -> Buffer-Red -> Led-Red -->
+<item itemtype="Connector" uid="conn-P11-buf" startpinid="Buffer-Red-in0" endpinid="8051-1-PORT11" pointList="-104,-40,-40,-40,-40,16,-8,16" />
+<item itemtype="Connector" uid="conn-buf-LEDR" startpinid="Buffer-Red-out" endpinid="Led-Red-lPin" pointList="-136,-40,-184,-40" />
 
-<!-- P1.2 -> Buffer -> Còi Buzzer -->
-<item itemtype="Connector" uid="conn-P12-buf" startpinid="Buffer-Buzzer-in0" endpinid="8051-1-PORT12" pointList="-244,-76,-208,-76" />
-<item itemtype="Connector" uid="conn-buf-Buzz" startpinid="Buffer-Buzzer-out" endpinid="Led-Buzzer-lPin" pointList="-276,-76,-300,-76" />
+<!-- P1.2 -> Buffer-Buzzer -> Led-Buzzer -->
+<item itemtype="Connector" uid="conn-P12-buf" startpinid="Buffer-Buzzer-in0" endpinid="8051-1-PORT12" pointList="-104,0,-32,0,-32,24,-8,24" />
+<item itemtype="Connector" uid="conn-buf-Buzz" startpinid="Buffer-Buzzer-out" endpinid="Led-Buzzer-lPin" pointList="-136,0,-184,0" />
 
-<!-- P1.3 -> Buffer -> Barie Vào -->
-<item itemtype="Connector" uid="conn-P13-buf" startpinid="Buffer-Gate-in0" endpinid="8051-1-PORT13" pointList="-244,-68,-208,-68" />
-<item itemtype="Connector" uid="conn-buf-Gate" startpinid="Buffer-Gate-out" endpinid="Led-Gate-lPin" pointList="-276,-68,-300,-68" />
+<!-- P1.3 -> Buffer-Gate -> Led-Gate -->
+<item itemtype="Connector" uid="conn-P13-buf" startpinid="Buffer-Gate-in0" endpinid="8051-1-PORT13" pointList="-104,40,-24,40,-24,32,-8,32" />
+<item itemtype="Connector" uid="conn-buf-Gate" startpinid="Buffer-Gate-out" endpinid="Led-Gate-lPin" pointList="-136,40,-184,40" />
 
-<!-- UART P3.1 (TXD) nối RX của Serial Terminal -->
-<item itemtype="Connector" uid="conn-TXD" startpinid="8051-1-PORT31" endpinid="SerialTerm-1-pin0" pointList="-208,-12,-160,-12,-160,-228,-76,-228" />
+<!-- UART P3.1 (TXD) -> SerialTerm RX (pin0) -->
+<item itemtype="Connector" uid="conn-TXD" startpinid="8051-1-PORT31" endpinid="SerialTerm-1-pin0" pointList="-8,88,-16,88,-16,-228,-36,-228" />
 
-<!-- UART P3.0 (RXD) nối TX của Serial Terminal -->
-<item itemtype="Connector" uid="conn-RXD" startpinid="8051-1-PORT30" endpinid="SerialTerm-1-pin1" pointList="-208,-20,-170,-20,-170,-212,-76,-212" />
+<!-- UART P3.0 (RXD) -> SerialTerm TX (pin1) -->
+<item itemtype="Connector" uid="conn-RXD" startpinid="8051-1-PORT30" endpinid="SerialTerm-1-pin1" pointList="-8,80,-20,80,-20,-212,-36,-212" />
 
-<!-- Nút nhấn Xe Vào (P3.2) -->
-<item itemtype="Connector" uid="conn-PushIN-P32" startpinid="Push-IN-switch0pinN" endpinid="8051-1-PORT32" pointList="-304,-4,-208,-4" />
-<item itemtype="Connector" uid="conn-PushIN-GND" startpinid="Ground-IN-Gnd" endpinid="Push-IN-pinP0" pointList="-336,8,-336,-4" />
+<!-- Cảm biến Vào P3.2 -->
+<item itemtype="Connector" uid="conn-PushIN-P32" startpinid="Push-IN-switch0pinN" endpinid="8051-1-PORT32" pointList="-144,100,-32,100,-32,96,-8,96" />
+<item itemtype="Connector" uid="conn-PushIN-GND" startpinid="Ground-IN-Gnd" endpinid="Push-IN-pinP0" pointList="-176,114,-176,100" />
 
-<!-- Nút nhấn Xe Ra (P3.3) -->
-<item itemtype="Connector" uid="conn-PushOUT-P33" startpinid="Push-OUT-switch0pinN" endpinid="8051-1-PORT33" pointList="-304,44,-250,44,-250,4,-208,4" />
-<item itemtype="Connector" uid="conn-PushOUT-GND" startpinid="Ground-OUT-Gnd" endpinid="Push-OUT-pinP0" pointList="-336,56,-336,44" />
+<!-- Cảm biến Ra P3.3 -->
+<item itemtype="Connector" uid="conn-PushOUT-P33" startpinid="Push-OUT-switch0pinN" endpinid="8051-1-PORT33" pointList="-144,160,-24,160,-24,104,-8,104" />
+<item itemtype="Connector" uid="conn-PushOUT-GND" startpinid="Ground-OUT-Gnd" endpinid="Push-OUT-pinP0" pointList="-176,174,-176,160" />
 
-<!-- LCD: Chân RW nối Ground (Chế độ ghi lệnh/ký tự) -->
-<item itemtype="Connector" uid="conn-LCD-RW" startpinid="Hd44780-1-PinRW" endpinid="Ground-LCD-Gnd" pointList="64,28,64,44" />
+<!-- LCD RW -> Ground -->
+<item itemtype="Connector" uid="conn-LCD-RW" startpinid="Hd44780-1-PinRW" endpinid="Ground-LCD-Gnd" pointList="224,48,224,60" />
 
-<!-- LCD: Chân RS nối P3.5 -->
-<item itemtype="Connector" uid="conn-LCD-RS" startpinid="Hd44780-1-PinRS" endpinid="8051-1-PORT35" pointList="56,28,56,-8,-180,-8,-180,20,-208,20" />
+<!-- LCD RS -> P3.5 (qua phía dưới MCU) -->
+<item itemtype="Connector" uid="conn-LCD-RS" startpinid="Hd44780-1-PinRS" endpinid="8051-1-PORT35" pointList="216,48,216,184,-64,184,-64,120,-8,120" />
 
-<!-- LCD: Chân Enable (E) nối P3.6 -->
-<item itemtype="Connector" uid="conn-LCD-EN" startpinid="Hd44780-1-PinEn" endpinid="8051-1-PORT36" pointList="72,28,72,0,-190,0,-190,28,-208,28" />
+<!-- LCD EN -> P3.6 (qua phía dưới MCU) -->
+<item itemtype="Connector" uid="conn-LCD-EN" startpinid="Hd44780-1-PinEn" endpinid="8051-1-PORT36" pointList="232,48,232,192,-56,192,-56,128,-8,128" />
 
-<!-- LCD Data Bus (P2.0 -> D0, P2.1 -> D1, ..., P2.7 -> D7) -->
-<item itemtype="Connector" uid="conn-D0" startpinid="Hd44780-1-dataPin0" endpinid="8051-1-PORT20" pointList="80,28,80,60,-144,60" />
-<item itemtype="Connector" uid="conn-D1" startpinid="Hd44780-1-dataPin1" endpinid="8051-1-PORT21" pointList="88,28,88,52,-144,52" />
-<item itemtype="Connector" uid="conn-D2" startpinid="Hd44780-1-dataPin2" endpinid="8051-1-PORT22" pointList="96,28,96,44,-144,44" />
-<item itemtype="Connector" uid="conn-D3" startpinid="Hd44780-1-dataPin3" endpinid="8051-1-PORT23" pointList="104,28,104,36,-144,36" />
-<item itemtype="Connector" uid="conn-D4" startpinid="Hd44780-1-dataPin4" endpinid="8051-1-PORT24" pointList="112,28,112,28,-144,28" />
-<item itemtype="Connector" uid="conn-D5" startpinid="Hd44780-1-dataPin5" endpinid="8051-1-PORT25" pointList="120,28,120,20,-144,20" />
-<item itemtype="Connector" uid="conn-D6" startpinid="Hd44780-1-dataPin6" endpinid="8051-1-PORT26" pointList="128,28,128,12,-144,12" />
-<item itemtype="Connector" uid="conn-D7" startpinid="Hd44780-1-dataPin7" endpinid="8051-1-PORT27" pointList="136,28,136,4,-144,4" />
+<!-- LCD 8-Bit Data Bus (P2.0 - P2.7 song song hoàn hảo, không chéo dây) -->
+<item itemtype="Connector" uid="conn-D0" startpinid="Hd44780-1-dataPin0" endpinid="8051-1-PORT20" pointList="240,48,240,160,56,160" />
+<item itemtype="Connector" uid="conn-D1" startpinid="Hd44780-1-dataPin1" endpinid="8051-1-PORT21" pointList="248,48,248,152,56,152" />
+<item itemtype="Connector" uid="conn-D2" startpinid="Hd44780-1-dataPin2" endpinid="8051-1-PORT22" pointList="256,48,256,144,56,144" />
+<item itemtype="Connector" uid="conn-D3" startpinid="Hd44780-1-dataPin3" endpinid="8051-1-PORT23" pointList="264,48,264,136,56,136" />
+<item itemtype="Connector" uid="conn-D4" startpinid="Hd44780-1-dataPin4" endpinid="8051-1-PORT24" pointList="272,48,272,128,56,128" />
+<item itemtype="Connector" uid="conn-D5" startpinid="Hd44780-1-dataPin5" endpinid="8051-1-PORT25" pointList="280,48,280,120,56,120" />
+<item itemtype="Connector" uid="conn-D6" startpinid="Hd44780-1-dataPin6" endpinid="8051-1-PORT26" pointList="288,48,288,112,56,112" />
+<item itemtype="Connector" uid="conn-D7" startpinid="Hd44780-1-dataPin7" endpinid="8051-1-PORT27" pointList="296,48,296,104,56,104" />
 
 </circuit>

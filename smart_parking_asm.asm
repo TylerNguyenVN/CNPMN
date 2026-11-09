@@ -437,9 +437,9 @@ D_1500MS:
 ; =====================================================================
 ; VÙNG LƯU TRỮ CHUỖI KÝ TỰ HẰNG SỐ (CONST STRINGS IN ROM)
 ; =====================================================================
-STR_LCD_LINE1:      DB 'SMART PARKING 4.0', 0
+STR_LCD_LINE1:      DB ' SMART PARKING  ', 0
 STR_LCD_FULL:       DB 'STATUS: FULL !!!', 0
-STR_LCD_SLOTS:      DB 'SLOTS: ', 0
+STR_LCD_SLOTS:      DB 'SLOT: ', 0
 STR_LCD_FREE:       DB '/10 FREE', 0
 
 STR_INIT_MSG:       DB '[INIT] HE THONG SAN SANG (ASSEMBLY)\r\n', 0

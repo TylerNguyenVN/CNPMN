@@ -1,6 +1,6 @@
 /*
  * =========================================================================================
- * DỰ ÁN THỰC TẾ: HỆ THỐNG BÃI ĐỖ XE THÔNG MINH CÔNG NGHIỆP (SMART PARKING 4.0 PRO)
+ * DỰ ÁN THỰC TẾ: HỆ THỐNG BÃI ĐỖ XE THÔNG MINH CÔNG NGHIỆP ( SMART PARKING   PRO)
  * HỖ TRỢ ĐỒNG MÔ PHỎNG THỜI GIAN THỰC (HARDWARE-IN-THE-LOOP VỚI PROTEUS QUA COMPIM)
  * Học phần: Công nghệ phần mềm nhúng
  * Vi điều khiển: AT89C51 / 8051 (Thạch anh 11.0592 MHz - Baudrate 9600)
@@ -150,14 +150,14 @@ void update_lcd_status(void) {
     unsigned char empty_slots = MAX_CAPACITY - current_cars;
 
     lcd_cmd(0x80); // Dòng 1
-    lcd_string("SMART PARKING 4.0");
+    lcd_string(" SMART PARKING  ");
 
     lcd_cmd(0xC0); // Dòng 2
     if (current_cars >= MAX_CAPACITY) {
         lcd_string("STATUS: FULL !!!");
         LED_RED = 1;
     } else {
-        lcd_string("SLOTS: ");
+        lcd_string("SLOT: ");
         lcd_send_2digits(empty_slots);
         lcd_string("/");
         lcd_send_2digits(MAX_CAPACITY);
