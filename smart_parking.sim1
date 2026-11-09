@@ -1,7 +1,7 @@
 <circuit version="" rev="2224" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="1" >
 
 <!-- VI ĐIỀU KHIỂN AT89C51 (8051) -->
-<item itemtype="MCU" CircId="8051-1" mainComp="false" Show_id="true" Show_Val="false" Pos="-200,-100" rotation="0" hflip="1" vflip="1" label="AT89C51" idLabPos="10,-14" labelrot="0" valLabPos="0,0" valLabRot="0" Frequency="12 MHz" Program="smart_parking_pro.hex" Auto_Load="true" SerialMon="-1" />
+<item itemtype="MCU" CircId="8051-1" mainComp="false" Show_id="true" Show_Val="false" Pos="-200,-100" rotation="0" hflip="1" vflip="1" label="AT89C51" idLabPos="10,-14" labelrot="0" valLabPos="0,0" valLabRot="0" Frequency="12 MHz" Program="smart_parking_asm.hex" Auto_Load="true" SerialMon="-1" />
 
 <!-- NGUỒN VCC (+5V) CHO CHÂN !EA -->
 <item itemtype="Rail" CircId="Rail-EA" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-116,-52" rotation="90" hflip="1" vflip="1" label="VCC" idLabPos="-5,-10" labelrot="-90" valLabPos="-12,6" valLabRot="-90" Voltage="5 V" />
