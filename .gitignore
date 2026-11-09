@@ -1,0 +1,17 @@
+# Báo cáo và tài liệu (không push theo yêu cầu)
+BAO_CAO_DU_AN_THUC_TE.md
+BAO_CAO_NOP_BAI_TAP_LON.md
+.impeccable/
+
+# Ảnh mẫu thử nghiệm
+*.png
+*.jpg
+*.jpeg
+
+# Keil & IDE build artifacts (nếu có)
+*.hex
+*.obj
+*.lst
+*.m51
+*.uvopt
+*.uvgui*
