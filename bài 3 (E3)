@@ -1,0 +1,80 @@
+ORG 0000H
+    LJMP MAIN
+
+MAIN:
+    MOV TMOD, #01H      ; Timer 0, Mode 1
+CHECK_SW:
+    ; Đọc trạng thái công tắc tại P3.2 (SW1) và P3.3 (SW2)
+    MOV C, P3.2
+    MOV F0, C           ; Lưu trạng thái SW1 vào cờ F0
+    MOV C, P3.3
+    
+    ; Phân nhánh theo bảng trạng thái
+    JNB P3.3, SW2_0     ; Nếu SW2 = 0
+    JB F0, SW_11        ; Nếu SW2 = 1 và SW1 = 1 -> 80%
+    SJMP SW_01          ; Nếu SW2 = 1 và SW1 = 0 -> 20%
+
+SW2_0:
+    JB F0, SW_10        ; Nếu SW2 = 0 và SW1 = 1 -> 50%
+    SJMP SW_00          ; Nếu SW2 = 0 và SW1 = 0 -> 0%
+
+SW_00: ; 0% (LED luôn tắt)
+    SETB P2.0
+    ACALL DELAY_10MS
+    LJMP CHECK_SW
+
+SW_01: ; 20% (Sáng 2ms, Tắt 8ms)
+    CLR P2.0            ; Sáng
+    MOV R7, #2
+    ACALL DELAY_MS_R7
+    SETB P2.0           ; Tắt
+    MOV R7, #8
+    ACALL DELAY_MS_R7
+    LJMP CHECK_SW
+
+SW_10: ; 50% (Sáng 5ms, Tắt 5ms)
+    CLR P2.0
+    MOV R7, #5
+    ACALL DELAY_MS_R7
+    SETB P2.0
+    MOV R7, #5
+    ACALL DELAY_MS_R7
+    LJMP CHECK_SW
+
+SW_11: ; 80% (Sáng 8ms, Tắt 2ms)
+    CLR P2.0
+    MOV R7, #8
+    ACALL DELAY_MS_R7
+    SETB P2.0
+    MOV R7, #2
+    ACALL DELAY_MS_R7
+    LJMP CHECK_SW
+
+; Chương trình con tạo trễ R7 lần 1ms (mỗi 1ms dùng Timer 0)
+DELAY_MS_R7:
+    MOV A, R7
+    JZ END_DL
+DL_LOOP:
+    PUSH ACC
+    ACALL DELAY_1MS_T0
+    POP ACC
+    DEC A
+    MOV R7, A
+    JNZ DL_LOOP
+END_DL:
+    RET
+
+DELAY_1MS_T0:
+    MOV TH1, #0FCH      ; (Hoặc dùng Timer 0 nạp 1ms: 65536 - 1000 = FC18H)
+    MOV TL1, #18H
+    ; (Dùng chung cấu trúc nạp 1ms tương tự Bài 2 cho Timer 0)
+    MOV TH0, #0FCH
+    MOV TL0, #18H
+    SETB TR0
+W_T0: 
+    JNB TF0, W_T0
+    CLR TR0
+    CLR TF0
+    RET
+
+END
