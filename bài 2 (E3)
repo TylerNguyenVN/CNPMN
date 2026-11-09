@@ -1,0 +1,24 @@
+ORG 0000H
+    LJMP MAIN
+
+MAIN:
+    MOV TMOD, #10H      ; Timer 1, Mode 1 (16-bit)
+
+SQUARE_LOOP:
+    SETB P1.0           ; Xuất mức cao
+    ACALL DELAY_1MS
+    CLR P1.0            ; Xuất mức thấp
+    ACALL DELAY_1MS
+    SJMP SQUARE_LOOP
+
+DELAY_1MS:
+    MOV TH1, #0FCH      ; Nạp cao
+    MOV TL1, #18H       ; Nạp thấp
+    SETB TR1            ; Chạy Timer 1
+W_TF1:
+    JNB TF1, W_TF1      ; Đợi tràn
+    CLR TR1             ; Dừng Timer 1
+    CLR TF1             ; Xóa cờ tràn
+    RET
+
+END
